@@ -1,6 +1,7 @@
 package com.capspringboot.demo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ import com.capspringboot.demo.model.Categories;
 import com.capspringboot.demo.model.Response;
 import com.capspringboot.demo.repo.CategoriesRepository;
 
-@RestController
-	@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:9191"})
+	@RestController
+	@CrossOrigin(origins = {"http://localhost:4200"})
 	@RequestMapping("/categories")
 	public class CategoriesController {
 	  @Autowired
@@ -26,23 +27,23 @@ import com.capspringboot.demo.repo.CategoriesRepository;
 		final String TAG = "Categories";
 		
 		@PostMapping(path= "/add")
-		public Response<Categories> addCategory(@RequestParam String categoryName, @RequestParam String categoryDescription, @RequestParam String categoryImageUrl,	@RequestParam Integer active) {
+		public Response<Categories> addCategories(@RequestParam(value = "categoryId", required = false)Integer categoryId, @RequestParam String categoryTitle, @RequestParam String categoryDescription, @RequestParam String categoryImageUrl, @RequestParam Integer active, @RequestParam Date addedOn) {
 			Date date = new Date();
 			
-			Categories category = new Categories(null, categoryName, categoryDescription, categoryImageUrl, active, date);
+			Categories category = new Categories(null, categoryTitle, categoryDescription, categoryImageUrl, active, addedOn);
 			repository.save(category);
 			
-			return new Response<Categories>(101, TAG+" Saved Successfully at "+date, null);
+			return new Response<Categories>(101, TAG+" Saved Successfully at "+date, Arrays.asList(category));
 		}
 		
 		@GetMapping(path="/get")
 		public Response<Categories> getAllCategories(){
 			
-			ArrayList<Categories> list = new ArrayList<Categories>();
-			repository.findAll().forEach((category) -> list.add(category));
+			ArrayList<Categories> categories = new ArrayList<>();
+			repository.findAll().forEach((category) -> categories.add(category));
 			
 			Date date = new Date();
-			return new Response<Categories>(101, list.size()+" "+TAG+"s Fetched Successfully at "+date, list);
+			return new Response<Categories>(101, categories.size()+" "+TAG+"s retrieved successfully at "+date, categories);
 			
 }
 
@@ -51,7 +52,7 @@ import com.capspringboot.demo.repo.CategoriesRepository;
 	@GetMapping(path = "/get/{id}")
 	public Response<Categories> getCategoryById(@PathVariable("id") Integer id){
 		
-		ArrayList<Categories> list = new ArrayList<Categories>();
+		ArrayList<Categories> list = new ArrayList<>();
 		Categories category = repository.findById(id).get();
 		list.add(category);
 		
@@ -61,11 +62,11 @@ import com.capspringboot.demo.repo.CategoriesRepository;
 	}
 	
 	@PostMapping(path= "/update")
-	public Response<Categories> updateCategory(@RequestParam Integer categoryId, @RequestParam String categoryName, @RequestParam String categoryDescription, @RequestParam String categoryImageUrl,	@RequestParam Integer active) {
+	public Response<Categories> updateCategory(@RequestParam Integer categoryId, @RequestParam String categoryTitle, @RequestParam String categoryDescription, @RequestParam String categoryImageUrl,	@RequestParam Integer active) {
 
 Date date = new Date();
 		
-		Categories category = new Categories(categoryId, categoryName, categoryDescription, categoryImageUrl, active, date);
+		Categories category = new Categories(categoryId, categoryTitle, categoryDescription, categoryImageUrl, active, date);
 		repository.save(category);
 		
 		return new Response<Categories>(101, TAG+" Updated Successfully at "+date, null);

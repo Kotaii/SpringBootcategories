@@ -13,9 +13,9 @@ import javax.persistence.Id;
 		@Id
 		@GeneratedValue(strategy = GenerationType.AUTO)
 		Integer categoryId;
-		String categoryName;
+		String categoryTitle;
 		String categoryDescription;
-		String catgeoryImageUrl;
+		String categoryImageUrl;
 		Integer active;
 		Date addedOn;
 		
@@ -23,12 +23,12 @@ import javax.persistence.Id;
 			
 		}
 		
-		public Categories(Integer categoryId, String categoryName, String categoryDescription, String catgeoryImageUrl,
+		public Categories(Integer categoryId, String categoryTitle, String categoryDescription, String categoryImageUrl,
 				Integer active, Date addedOn) {
 			this.categoryId = categoryId;
-			this.categoryName = categoryName;
+			this.categoryTitle = categoryTitle;
 			this.categoryDescription = categoryDescription;
-			this.catgeoryImageUrl = catgeoryImageUrl;
+			this.categoryImageUrl = categoryImageUrl;
 			this.active = active;
 			this.addedOn = addedOn;
 		}
@@ -42,12 +42,12 @@ import javax.persistence.Id;
 			this.categoryId = categoryId;
 		}
 
-		public String getCategoryName() {
-			return categoryName;
+		public String getCategoryTitle() {
+			return categoryTitle;
 		}
 
-		public void setCategoryName(String categoryName) {
-			this.categoryName = categoryName;
+		public void setCategoryName(String categoryTitle) {
+			this.categoryTitle = categoryTitle;
 		}
 
 		public String getCategoryDescription() {
@@ -58,12 +58,12 @@ import javax.persistence.Id;
 			this.categoryDescription = categoryDescription;
 		}
 
-		public String getCatgeoryImageUrl() {
-			return catgeoryImageUrl;
+		public String getCategoryImageUrl() {
+			return categoryImageUrl;
 		}
 
-		public void setCatgeoryImageUrl(String catgeoryImageUrl) {
-			this.catgeoryImageUrl = catgeoryImageUrl;
+		public void setCategoryImageUrl(String categoryImageUrl) {
+			this.categoryImageUrl = categoryImageUrl;
 		}
 
 		public Integer getActive() {
@@ -84,8 +84,8 @@ import javax.persistence.Id;
 
 		@Override
 		public String toString() {
-			return "Categories [categoryId=" + categoryId + ", categoryName=" + categoryName + ", categoryDescription="
-					+ categoryDescription + ", catgeoryImageUrl=" + catgeoryImageUrl + ", active=" + active + ", addedOn="
+			return "Categories [categoryId=" + categoryId + ", categoryTitle=" + categoryTitle + ", categoryDescription="
+					+ categoryDescription + ", categoryImageUrl=" + categoryImageUrl + ", active=" + active + ", addedOn="
 					+ addedOn + "]";
 		}
 		
